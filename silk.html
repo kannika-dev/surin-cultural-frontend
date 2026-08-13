@@ -150,19 +150,16 @@ const SUPABASE_KEY = 'sb_publishable_wN7UxK0ylSCP-sW-jO8NpA_0wZkjDN6';
 // ฟังก์ชันดึงข้อมูลจาก Supabase
 async function loadSilks() {
   try {
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/silks?select=*`, {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`
-      }
-    });
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/silks?select=*,subpatterns(*)`, {
+  headers: { 'apikey': SUPABASE_KEY, 'Authorization': `Bearer ${SUPABASE_KEY}` }
+});
 
-    const result = await response.json();
+const silks = await response.json();
     const container = document.getElementById('silk-list');
     container.innerHTML = '';
 
     // เช็กว่ามีข้อมูลไหม (Supabase คืนค่าเป็น Array ตรงๆ)
-    if (!result || result.length === 0) {
+    if (!silks || silks.length === 0) {
       container.innerHTML = '<p class="text-center text-muted py-5">ยังไม่มีข้อมูลผ้าไหมในระบบ</p>';
       return;
     }
@@ -358,9 +355,7 @@ function openSubPatternModal(silkIndex, subIndex) {
       // ใส่ข้อมูลเข้า Pop-up ลายย่อย
       document.getElementById('subModalTitle').innerText = `ลายย่อย: ${sub.title || sub.name || ''}`;
       document.getElementById('subModalHeaderTitle').innerText = sub.title || sub.name || 'ไม่มีชื่อลายย่อย';
-      document.getElementById('subModalImage').src = subImgUrl;
-      document.getElementById('subModalDescription').innerHTML = renderRichText(sub.description);
-      // แสดง Pop-up ลายย่อย
+      document.getElementById('subModalImage').src = sub.image_url || 'https://via.placeholder.com/400x300?text=No+Image';      document.getElementById('subModalDescription').innerText = sub.description || 'ไม่มีรายละเอียด';      // แสดง Pop-up ลายย่อย
       const subModal = new bootstrap.Modal(document.getElementById('subPatternDetailModal'));
       subModal.show();
     }
