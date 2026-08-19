@@ -153,8 +153,8 @@
 
     function getImageUrl(item) {
       if (!item) return NO_IMAGE;
-      if (item.image_url) return item.image_url;
-      return NO_IMAGE;
+      if (item.image) return item.image;
+      if (item.image_url) return item.image_url;      return NO_IMAGE;
     }
 
     // ฟังก์ชันดึงข้อมูลจาก Supabase
@@ -238,8 +238,7 @@
             </h6>
             <div class="row g-2">
               ${subPatterns.map((sub, subIdx) => {
-                const subImgUrl = sub.image_url || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='100'><rect width='150' height='100' fill='%23e9ecef'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%236c757d'>ไม่มีรูป</text></svg>";
-
+                const subImgUrl = sub.image || sub.image_url || "data:image/svg+xml;utf8...";
                 return `
                   <div class="col-6 col-md-4">
                     <div class="card h-100 border-0 bg-light shadow-sm text-center p-2" 
@@ -282,8 +281,7 @@
 
       const sub = silk.subpatterns[subIndex];
 
-      const subImgUrl = sub.image_url || "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='100'><rect width='150' height='100' fill='%23e9ecef'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%236c757d'>ไม่มีรูป</text></svg>";
-
+      const subImgUrl = sub.image || sub.image_url || "data:image/svg+xml;utf8...";
       // ใส่ข้อมูลเข้า Pop-up ลายย่อย
       document.getElementById('subModalTitle').innerText = `ลายย่อย: ${sub.name || ''}`;
       document.getElementById('subModalHeaderTitle').innerText = sub.name || 'ไม่มีชื่อลายย่อย';
