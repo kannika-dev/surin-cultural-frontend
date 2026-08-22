@@ -134,21 +134,39 @@
   </div>
 
   <!-- ปุ่มเลือกชาติพันธุ์ -->
-  <div class="container mb-4">
-    <div class="row g-3 justify-content-center">
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="ethnic-select-card active" onclick="selectEthnic('ชาวกูย', this)">
-          <div class="fw-bold fs-5">ชาวกูย</div>
+  <div class="row g-3 mb-4">
+    <!-- ชาวกูย (เน้นวิถีชีวิตคนเลี้ยงช้าง/ป่า) -->
+    <div class="col-12 col-md-4">
+      <div class="card ethnic-btn-card border-0 rounded-4 overflow-hidden text-center text-white p-3 shadow-sm position-relative active" 
+           onclick="selectEthnic('ชาวกูย', this)" 
+           style="background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?q=80&w=800&auto=format&fit=crop') center/cover no-repeat; cursor: pointer; min-height: 120px;">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100 position-relative z-1">
+          <h4 class="fw-bold mb-1 text-shadow">ชาวกูย</h4>
+          <small class="opacity-90">หมอช้าง & สีกระบอก</small>
         </div>
       </div>
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="ethnic-select-card" onclick="selectEthnic('ชาวเขมร', this)">
-          <div class="fw-bold fs-5">ชาวเขมร</div>
+    </div>
+  
+    <!-- ชาวเขมร (เน้นปราสาทหิน/มรดกอารยธรรม) -->
+    <div class="col-12 col-md-4">
+      <div class="card ethnic-btn-card border-0 rounded-4 overflow-hidden text-center text-white p-3 shadow-sm position-relative" 
+           onclick="selectEthnic('ชาวเขมร', this)" 
+           style="background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1608037521244-f126231be46d?q=80&w=800&auto=format&fit=crop') center/cover no-repeat; cursor: pointer; min-height: 120px;">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100 position-relative z-1">
+          <h4 class="fw-bold mb-1 text-shadow">ชาวเขมร</h4>
+          <small class="opacity-90">ผ้าโฮล & แซนโฎนตา</small>
         </div>
       </div>
-      <div class="col-6 col-md-4 col-lg-3">
-        <div class="ethnic-select-card" onclick="selectEthnic('ชาวไทยอีสาน', this)">
-          <div class="fw-bold fs-5">ชาวไทยอีสาน</div>
+    </div>
+  
+    <!-- ชาวไทยอีสาน (เน้นรวงข้าว/ทุ่งนา/วิถีเกษตร) -->
+    <div class="col-12 col-md-4">
+      <div class="card ethnic-btn-card border-0 rounded-4 overflow-hidden text-center text-white p-3 shadow-sm position-relative" 
+           onclick="selectEthnic('ชาวไทยอีสาน', this)" 
+           style="background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop') center/cover no-repeat; cursor: pointer; min-height: 120px;">
+        <div class="d-flex flex-column align-items-center justify-content-center h-100 position-relative z-1">
+          <h4 class="fw-bold mb-1 text-shadow">ชาวไทยอีสาน</h4>
+          <small class="opacity-90">ผ้าขิด & เสียงแคน</small>
         </div>
       </div>
     </div>
