@@ -29,30 +29,35 @@
     }
     
     /* ปุ่มเลือกชาติพันธุ์แบบกล่องการ์ด */
-    .ethnic-select-card { 
-      border: 2px solid #e5e7eb;
-      border-radius: 16px; 
-      padding: 16px 24px;
-      background: #ffffff;
-      cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-      text-align: center;
-    }
-    .ethnic-select-card:hover {
-      transform: translateY(-4px);
-      border-color: #0d9488;
-      box-shadow: 0 8px 20px rgba(13, 148, 136, 0.15);
-    }
-    .ethnic-select-card.active {
-      background: linear-gradient(135deg, #0d9488, #0f766e);
-      color: #ffffff !important;
-      border-color: #0d9488;
-      box-shadow: 0 10px 22px rgba(13, 148, 136, 0.3);
-    }
-    .ethnic-select-card.active .text-muted {
-      color: rgba(255, 255, 255, 0.8) !important;
-    }
+    .ethnic-card {
+  border: none;
+  border-radius: 16px;
+  height: 120px; /* ล็อกความสูงกล่องการ์ด */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ethnic-card .card-content {
+  position: absolute;
+  bottom: 15px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #ffffff;
+  z-index: 2;
+}
+
+/* สถานะเมื่อกดเลือก (มีเส้นขอบสีฟ้า/เขียวเด่นขึ้นมา) */
+.ethnic-card.active {
+  outline: 3px solid #0d6efd;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.ethnic-card:hover {
+  transform: translateY(-3px);
+}
 
     /* ตัวกรองหมวดหมู่ */
     .category-pill {
@@ -135,38 +140,35 @@
 
   <!-- ปุ่มเลือกชาติพันธุ์ -->
   <div class="row g-3 mb-4">
-    <!-- ชาวกูย (เน้นวิถีชีวิตคนเลี้ยงช้าง/ป่า) -->
+    <!-- ชาวกูย (ภาพช้างสุรินทร์/วิถีคนเลี้ยงช้าง) -->
     <div class="col-12 col-md-4">
-      <div class="card ethnic-btn-card border-0 rounded-4 overflow-hidden text-center text-white p-3 shadow-sm position-relative active" 
-           onclick="selectEthnic('ชาวกูย', this)" 
-           style="background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?q=80&w=800&auto=format&fit=crop') center/cover no-repeat; cursor: pointer; min-height: 120px;">
-        <div class="d-flex flex-column align-items-center justify-content-center h-100 position-relative z-1">
-          <h4 class="fw-bold mb-1 text-shadow">ชาวกูย</h4>
-          <small class="opacity-90">หมอช้าง & สีกระบอก</small>
+      <div class="card ethnic-card active" onclick="selectEthnic('ชาวกูย', this)" 
+           style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;">
+        <div class="card-content">
+          <h5 class="fw-bold mb-1">ชาวกูย</h5>
+          <small>หมอช้าง & สีกระบอก</small>
         </div>
       </div>
     </div>
   
-    <!-- ชาวเขมร (เน้นปราสาทหิน/มรดกอารยธรรม) -->
+    <!-- ชาวเขมร (ภาพงานทอผ้าพื้นเมือง/สถาปัตยกรรมหิน) -->
     <div class="col-12 col-md-4">
-      <div class="card ethnic-btn-card border-0 rounded-4 overflow-hidden text-center text-white p-3 shadow-sm position-relative" 
-           onclick="selectEthnic('ชาวเขมร', this)" 
-           style="background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1608037521244-f126231be46d?q=80&w=800&auto=format&fit=crop') center/cover no-repeat; cursor: pointer; min-height: 120px;">
-        <div class="d-flex flex-column align-items-center justify-content-center h-100 position-relative z-1">
-          <h4 class="fw-bold mb-1 text-shadow">ชาวเขมร</h4>
-          <small class="opacity-90">ผ้าโฮล & แซนโฎนตา</small>
+      <div class="card ethnic-card" onclick="selectEthnic('ชาวเขมร', this)" 
+           style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1608037521244-f126231be46d?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;">
+        <div class="card-content">
+          <h5 class="fw-bold mb-1">ชาวเขมร</h5>
+          <small>ผ้าโฮล & แซนโฎนตา</small>
         </div>
       </div>
     </div>
   
-    <!-- ชาวไทยอีสาน (เน้นรวงข้าว/ทุ่งนา/วิถีเกษตร) -->
+    <!-- ชาวไทยอีสาน (ภาพวิถีชีวิตทุ่งนา/เกษตรกรรม) -->
     <div class="col-12 col-md-4">
-      <div class="card ethnic-btn-card border-0 rounded-4 overflow-hidden text-center text-white p-3 shadow-sm position-relative" 
-           onclick="selectEthnic('ชาวไทยอีสาน', this)" 
-           style="background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop') center/cover no-repeat; cursor: pointer; min-height: 120px;">
-        <div class="d-flex flex-column align-items-center justify-content-center h-100 position-relative z-1">
-          <h4 class="fw-bold mb-1 text-shadow">ชาวไทยอีสาน</h4>
-          <small class="opacity-90">ผ้าขิด & เสียงแคน</small>
+      <div class="card ethnic-card" onclick="selectEthnic('ชาวไทยอีสาน', this)" 
+           style="background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;">
+        <div class="card-content">
+          <h5 class="fw-bold mb-1">ชาวไทยอีสาน</h5>
+          <small>ผ้าขิด & เสียงแคน</small>
         </div>
       </div>
     </div>
