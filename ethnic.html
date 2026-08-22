@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>กลุ่มชาติพันธุ์ - คลังสารสนเทศมรดกทางวัฒนธรรม</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <!-- Supabase JS Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <style>
+    body { 
+      background-color: #f4f6f8; 
+      font-family: 'Sarabun', sans-serif; 
+    }
+    
+    .navbar {
+      background-color: #121824 !important;
+    }
+    
+    /* Hero Banner ปรับเป็นรูปศิลปวัฒนธรรมโทนเข้ม */
+    .hero-banner {
+      background: linear-gradient(rgba(18, 24, 36, 0.85), rgba(18, 24, 36, 0.85)), 
+                  url('https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=1200') center/cover no-repeat;
+      color: #ffffff;
+      padding: 70px 20px;
+      text-align: center;
+      border-bottom: 4px solid #0d9488;
+    }
+    
+    /* ปุ่มเลือกชาติพันธุ์ดีไซน์ใหม่เป็นกล่องการ์ด */
+    .ethnic-select-card { 
+      border: 2px solid #e5e7eb;
+      border-radius: 16px; 
+      padding: 16px 24px;
+      background: #ffffff;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      text-align: center;
+      min-width: 180px;
+    }
+    .ethnic-select-card:hover {
+      transform: translateY(-4px);
+      border-color: #0d9488;
+      box-shadow: 0 8px 20px rgba(13, 148, 136, 0.15);
+    }
+    .ethnic-select-card.active {
+      background: linear-gradient(135deg, #0d9488, #0f766e);
+      color: #ffffff !important;
+      border-color: #0d9488;
+      box-shadow: 0 10px 22px rgba(13, 148, 136, 0.3);
+    }
+    .ethnic-select-card.active .text-muted {
+      color: rgba(255, 255, 255, 0.8) !important;
+    }
+
+    /* แถบตัวกรองหมวดหมู่ */
+    .category-pill {
+      border-radius: 20px;
+      padding: 6px 18px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid #cbd5e1;
+      background: #fff;
+      color: #475569;
+      transition: all 0.2s;
+    }
+    .category-pill.active {
+      background: #1e293b;
+      color: #fff;
+      border-color: #1e293b;
+    }
+
+    /* Card Style */
+    .ethnic-card { 
+      border: none; 
+      border-radius: 20px; 
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05); 
+      transition: transform 0.3s ease, box-shadow 0.3s ease; 
+      overflow: hidden;
+      background: #fff;
+    }
+    .ethnic-card:hover { 
+      transform: translateY(-8px); 
+      box-shadow: 0 16px 32px rgba(0,0,0,0.12); 
+    }
+    .card-img-top { 
+      height: 220px; 
+      object-fit: cover; 
+    }
+    .badge-category {
+      background-color: #ccfbf1;
+      color: #0f766e;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+    }
+  </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+  <!-- 1. Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top py-3">
+    <div class="container">
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="index.html">
+        🏛️ คลังมรดกทางวัฒนธรรม
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto gap-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">หน้าแรก</a></li>
+          <li class="nav-item"><a class="nav-link" href="silk.html">ภูมิปัญญาผ้าไหม</a></li>
+          <li class="nav-item"><a class="nav-link active fw-bold text-warning" href="ethnic.html">กลุ่มชาติพันธุ์</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">ประเพณี & วัฒนธรรม</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 2. Hero Banner ดีไซน์ใหม่ -->
+  <div class="hero-banner mb-5">
+    <div class="container">
+      <span class="badge bg-warning text-dark px-3 py-2 rounded-pill mb-3 fw-bold">🌾 เอกลักษณ์แห่งเมืองสุรินทร์</span>
+      <h1 class="display-5 fw-bold mb-3">วิถีชีวิตและอัตลักษณ์กลุ่มชาติพันธุ์</h1>
+      <p class="lead text-light max-w-2xl mx-auto opacity-90 fs-6">
+        สำรวจเรื่องราวทางประวัติศาสตร์ อาหาร การแต่งกาย ภาษา และเครื่องใช้ของ 3 กลุ่มชาติพันธุ์หลักในจังหวัดสุรินทร์
+      </p>
+    </div>
+  </div>
+
+  <!-- 3. ส่วนเลือกชาติพันธุ์แบบการ์ด -->
+  <div class="container mb-4">
+    <div class="row g-3 justify-content-center">
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="ethnic-select-card active" onclick="selectEthnic('ชาวกูย', this)">
+          <div class="fw-bold fs-5">ชาวกูย</div>
+          <div class="text-muted small">หมอช้าง & สีกระบอก</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="ethnic-select-card" onclick="selectEthnic('ชาวเขมร', this)">
+          <div class="fw-bold fs-5">ชาวเขมร</div>
+          <div class="text-muted small">ผ้าโฮล & แซนโดนตา</div>
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="ethnic-select-card" onclick="selectEthnic('ชาวไทยอีสาน', this)">
+          <div class="fw-bold fs-5">ชาวไทยอีสาน</div>
+          <div class="text-muted small">ผ้าขิด & เสียงแคน</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. ตัวกรองหมวดหมู่ย่อย -->
+  <div class="container mb-4">
+    <div class="d-flex justify-content-center gap-2 flex-wrap">
+      <span class="category-pill active" onclick="filterCategory('ทั้งหมด', this)">ทั้งหมด</span>
+      <span class="category-pill" onclick="filterCategory('อาหาร', this)"> อาหาร</span>
+      <span class="category-pill" onclick="filterCategory('การแต่งกาย', this)">ผ้า เครื่องแต่งกาย</span>
+      <span class="category-pill" onclick="filterCategory('ขนบธรรมเนียม', this)">ประเพณี</span>
+      <span class="category-pill" onclick="filterCategory('ภาษาถิ่น', classList='category-pill')" onclick="filterCategory('ภาษาถิ่น', this)"> ภาษาถิ่น</span>
+      <span class="category-pill" onclick="filterCategory('เครื่องใช้', this)">เครื่องใช้</span>
+    </div>
+  </div>
+
+  <!-- 5. ส่วนแสดงการ์ดเนื้อหา -->
+  <div class="container mb-5 flex-grow-1">
+    <div class="row g-4" id="ethnicContainer">
+      <div class="col-12 text-center py-5">
+        <div class="spinner-border text-teal" style="color: #0d9488;" role="status">
+          <span class="visually-hidden">กำลังโหลดข้อมูล...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Pop-up แสดงรายละเอียด -->
+  <div class="modal fade" id="ethnicDetailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 shadow-lg" style="border-radius: 24px; overflow: hidden;">
+        <div class="modal-header bg-dark text-white border-0 py-3 px-4">
+          <h5 class="modal-title fw-bold" id="modalHeaderGroup">รายละเอียด</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4 text-center">
+          <img id="modalImage" src="" class="img-fluid rounded-4 shadow-sm mb-4 w-100" style="max-height: 420px; object-fit: cover;">
+          <div class="d-flex justify-content-center gap-2 mb-3">
+            <span id="modalCategory" class="badge-category fs-6"></span>
+          </div>
+          <h3 id="modalTitle" class="fw-bold mb-3 text-dark"></h3>
+          <hr class="my-4">
+          <p id="modalDescription" class="text-secondary text-start lh-lg fs-6 px-3" style="white-space: pre-line;"></p>
+        </div>
+        <div class="modal-footer border-0 bg-light px-4 py-3">
+          <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">ปิดหน้าต่าง</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white text-center py-4 mt-auto">
+    <div class="container">
+      <p class="mb-0 text-secondary">© คลังสารสนเทศมรดกทางวัฒนธรรมจังหวัดสุรินทร์</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    const SUPABASE_URL = 'https://kclbymrasxwonebprhcz.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_wN7UxK0ylSCP-sw-jO8NpA_0wZkjDN6';
+    
+    // สร้าง Supabase Client ให้รองรับการเปิดไฟล์ในเครื่อง (file:///)
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let allEthnicData = [];
+    let currentEthnic = 'ชาวกูย';
+    let currentCategory = 'ทั้งหมด';
+
+    async function fetchEthnicData() {
+      try {
+        const { data, error } = await _supabase.from('ethnic_groups').select('*');
+        if (error) throw error;
+        
+        allEthnicData = data;
+        renderEthnicCards();
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        document.getElementById('ethnicContainer').innerHTML = `
+          <div class="col-12 text-center text-muted py-5">
+            <h5>ไม่สามารถดึงข้อมูลได้ กรุณาตรวจสอบข้อมูลในตาราง ethnic_groups</h5>
+          </div>`;
+      }
+    }
+
+    function selectEthnic(groupName, cardElement) {
+      currentEthnic = groupName;
+      document.querySelectorAll('.ethnic-select-card').forEach(card => card.classList.remove('active'));
+      cardElement.classList.add('active');
+      renderEthnicCards();
+    }
+
+    function filterCategory(categoryName, pillElement) {
+      currentCategory = categoryName;
+      document.querySelectorAll('.category-pill').forEach(pill => pill.classList.remove('active'));
+      pillElement.classList.add('active');
+      renderEthnicCards();
+    }
+
+    function renderEthnicCards() {
+      const container = document.getElementById('ethnicContainer');
+      
+      // กรองตามชาติพันธุ์ และ หมวดหมู่
+      let filteredData = allEthnicData.filter(item => item.group_name === currentEthnic);
+      if (currentCategory !== 'ทั้งหมด') {
+        filteredData = filteredData.filter(item => item.category === currentCategory);
+      }
+
+      if (filteredData.length === 0) {
+        container.innerHTML = `
+          <div class="col-12 text-center text-muted py-5">
+            <h5>ยังไม่มีข้อมูลหมวดหมู่ "${currentCategory}" ของกลุ่ม${currentEthnic}</h5>
+          </div>`;
+        return;
+      }
+
+      container.innerHTML = filteredData.map(item => `
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100 ethnic-card" onclick="openDetailModal(${item.id})">
+            <img src="${item.image || 'https://via.placeholder.com/400x240?text=No+Image'}" class="card-img-top" alt="${item.title}">
+            <div class="card-body d-flex flex-column p-4">
+              <span class="badge-category align-self-start mb-2">${item.category}</span>
+              <h5 class="card-title fw-bold text-dark mb-2">${item.title}</h5>
+              <p class="card-text text-muted small text-truncate mb-3">${item.description || ''}</p>
+              <button class="btn btn-outline-dark btn-sm rounded-pill mt-auto align-self-start px-3">
+                👁️ ดูรายละเอียด
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openDetailModal(id) {
+      const item = allEthnicData.find(d => d.id === id);
+      if (!item) return;
+
+      document.getElementById('modalHeaderGroup').innerText = `กลุ่ม${item.group_name}`;
+      document.getElementById('modalCategory').innerText = item.category;
+      document.getElementById('modalTitle').innerText = item.title;
+      document.getElementById('modalDescription').innerText = item.description || 'ไม่มีข้อมูลรายละเอียดเพิ่มเติม';
+      document.getElementById('modalImage').src = item.image || 'https://via.placeholder.com/600x400?text=No+Image';
+
+      const modal = new bootstrap.Modal(document.getElementById('ethnicDetailModal'));
+      modal.show();
+    }
+
+    fetchEthnicData();
+  </script>
+</body>
+</html>
