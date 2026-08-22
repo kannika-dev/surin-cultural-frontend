@@ -228,20 +228,21 @@
     let currentCategory = 'ทั้งหมด';
 
     async function fetchEthnicData() {
-      try {
-        const { data, error } = await _supabase.from('ethnic_groups').select('*');
-        if (error) throw error;
-        
-        allEthnicData = data;
-        renderEthnicCards();
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        document.getElementById('ethnicContainer').innerHTML = `
-          <div class="col-12 text-center text-muted py-5">
-            <h5>ไม่สามารถดึงข้อมูลได้ กรุณาตรวจสอบข้อมูลในตาราง ethnic_groups</h5>
-          </div>`;
-      }
-    }
+  try {
+    // ใช้ _supabase SDK ในการดึงข้อมูลเพื่อรองรับ Publishable Key
+    const { data, error } = await _supabase.from('ethnic_groups').select('*');
+    if (error) throw error;
+    
+    allEthnicData = data;
+    renderEthnicCards();
+  } catch (error) {
+    console.error('Error fetching ethnic data:', error);
+    document.getElementById('ethnicContainer').innerHTML = `
+      <div class="col-12 text-center text-muted py-5">
+        <h5>เกิดข้อผิดพลาดในการดึงข้อมูล</h5>
+      </div>`;
+  }
+}
 
     function selectEthnic(groupName, cardElement) {
       currentEthnic = groupName;
