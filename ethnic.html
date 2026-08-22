@@ -7,8 +7,7 @@
   <!-- Bootstrap 5 CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <!-- Supabase JS Client -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>  
+  
   <style>
     body { 
       background-color: #f4f6f8; 
@@ -19,7 +18,7 @@
       background-color: #121824 !important;
     }
     
-    /* Hero Banner ปรับเป็นรูปศิลปวัฒนธรรมโทนเข้ม */
+    /* Hero Banner */
     .hero-banner {
       background: linear-gradient(rgba(18, 24, 36, 0.85), rgba(18, 24, 36, 0.85)), 
                   url('https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=1200') center/cover no-repeat;
@@ -29,7 +28,7 @@
       border-bottom: 4px solid #0d9488;
     }
     
-    /* ปุ่มเลือกชาติพันธุ์ดีไซน์ใหม่เป็นกล่องการ์ด */
+    /* ปุ่มเลือกชาติพันธุ์แบบกล่องการ์ด */
     .ethnic-select-card { 
       border: 2px solid #e5e7eb;
       border-radius: 16px; 
@@ -39,7 +38,6 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 4px 12px rgba(0,0,0,0.03);
       text-align: center;
-      min-width: 180px;
     }
     .ethnic-select-card:hover {
       transform: translateY(-4px);
@@ -56,7 +54,7 @@
       color: rgba(255, 255, 255, 0.8) !important;
     }
 
-    /* แถบตัวกรองหมวดหมู่ */
+    /* ตัวกรองหมวดหมู่ */
     .category-pill {
       border-radius: 20px;
       padding: 6px 18px;
@@ -82,6 +80,7 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease; 
       overflow: hidden;
       background: #fff;
+      cursor: pointer;
     }
     .ethnic-card:hover { 
       transform: translateY(-8px); 
@@ -103,7 +102,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
 
-  <!-- 1. Navigation Bar -->
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top py-3">
     <div class="container">
       <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="index.html">
@@ -123,7 +122,7 @@
     </div>
   </nav>
 
-  <!-- 2. Hero Banner ดีไซน์ใหม่ -->
+  <!-- Hero Banner -->
   <div class="hero-banner mb-5">
     <div class="container">
       <span class="badge bg-warning text-dark px-3 py-2 rounded-pill mb-3 fw-bold">🌾 เอกลักษณ์แห่งเมืองสุรินทร์</span>
@@ -134,23 +133,26 @@
     </div>
   </div>
 
-  <!-- 3. ส่วนเลือกชาติพันธุ์แบบการ์ด -->
+  <!-- ปุ่มเลือกชาติพันธุ์ -->
   <div class="container mb-4">
     <div class="row g-3 justify-content-center">
       <div class="col-6 col-md-4 col-lg-3">
         <div class="ethnic-select-card active" onclick="selectEthnic('ชาวกูย', this)">
+          <div class="fs-2 mb-1">🐘</div>
           <div class="fw-bold fs-5">ชาวกูย</div>
           <div class="text-muted small">หมอช้าง & สีกระบอก</div>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-3">
         <div class="ethnic-select-card" onclick="selectEthnic('ชาวเขมร', this)">
+          <div class="fs-2 mb-1">🧵</div>
           <div class="fw-bold fs-5">ชาวเขมร</div>
           <div class="text-muted small">ผ้าโฮล & แซนโดนตา</div>
         </div>
       </div>
       <div class="col-6 col-md-4 col-lg-3">
         <div class="ethnic-select-card" onclick="selectEthnic('ชาวไทยอีสาน', this)">
+          <div class="fs-2 mb-1">🌾</div>
           <div class="fw-bold fs-5">ชาวไทยอีสาน</div>
           <div class="text-muted small">ผ้าขิด & เสียงแคน</div>
         </div>
@@ -158,19 +160,19 @@
     </div>
   </div>
 
-  <!-- 4. ตัวกรองหมวดหมู่ย่อย -->
+  <!-- ตัวกรองหมวดหมู่ -->
   <div class="container mb-4">
     <div class="d-flex justify-content-center gap-2 flex-wrap">
       <span class="category-pill active" onclick="filterCategory('ทั้งหมด', this)">ทั้งหมด</span>
-      <span class="category-pill" onclick="filterCategory('อาหาร', this)"> อาหาร</span>
+      <span class="category-pill" onclick="filterCategory('อาหาร', this)">🍲 อาหาร</span>
       <span class="category-pill" onclick="filterCategory('การแต่งกาย', this)">ผ้า เครื่องแต่งกาย</span>
       <span class="category-pill" onclick="filterCategory('ขนบธรรมเนียม', this)">ประเพณี</span>
-      <span class="category-pill" onclick="filterCategory('ภาษาถิ่น', classList='category-pill')" onclick="filterCategory('ภาษาถิ่น', this)"> ภาษาถิ่น</span>
-      <span class="category-pill" onclick="filterCategory('เครื่องใช้', this)">เครื่องใช้</span>
+      <span class="category-pill" onclick="filterCategory('ภาษาถิ่น', this)">🗣️ ภาษาถิ่น</span>
+      <span class="category-pill" onclick="filterCategory('เครื่องใช้', this)">🧺 เครื่องใช้</span>
     </div>
   </div>
 
-  <!-- 5. ส่วนแสดงการ์ดเนื้อหา -->
+  <!-- แสดงการ์ดเนื้อหา -->
   <div class="container mb-5 flex-grow-1">
     <div class="row g-4" id="ethnicContainer">
       <div class="col-12 text-center py-5">
@@ -181,7 +183,7 @@
     </div>
   </div>
 
-  <!-- Modal Pop-up แสดงรายละเอียด -->
+  <!-- Modal แสดงรายละเอียด -->
   <div class="modal fade" id="ethnicDetailModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content border-0 shadow-lg" style="border-radius: 24px; overflow: hidden;">
@@ -216,33 +218,40 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
-const SUPABASE_URL = 'https://kclbymrasxwonebprhcz.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_wN7UxK0ylSCP-sw-jO8NpA_0wZkjDN6';
-
-// เรียกใช้ผ่าน window.supabase
-const { createClient } = window.supabase;
-const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    const SUPABASE_URL = 'https://kclbymrasxwonebprhcz.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_wN7UxK0ylSCP-sw-jO8NpA_0wZkjDN6';
 
     let allEthnicData = [];
     let currentEthnic = 'ชาวกูย';
     let currentCategory = 'ทั้งหมด';
 
     async function fetchEthnicData() {
-  try {
-    // ใช้ _supabase SDK ในการดึงข้อมูลเพื่อรองรับ Publishable Key
-    const { data, error } = await _supabase.from('ethnic_groups').select('*');
-    if (error) throw error;
-    
-    allEthnicData = data;
-    renderEthnicCards();
-  } catch (error) {
-    console.error('Error fetching ethnic data:', error);
-    document.getElementById('ethnicContainer').innerHTML = `
-      <div class="col-12 text-center text-muted py-5">
-        <h5>เกิดข้อผิดพลาดในการดึงข้อมูล</h5>
-      </div>`;
-  }
-}
+      try {
+        // ใช้ Direct REST API Fetch พร้อมส่ง Header ที่ถูกต้องสำหรับ Publishable Key
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/ethnic_groups?select=*`, {
+          method: 'GET',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP Error Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        allEthnicData = data;
+        renderEthnicCards();
+      } catch (error) {
+        console.error('Fetch Error:', error);
+        document.getElementById('ethnicContainer').innerHTML = `
+          <div class="col-12 text-center text-muted py-5">
+            <h5>ไม่สามารถดึงข้อมูลได้ (${error.message})</h5>
+          </div>`;
+      }
+    }
 
     function selectEthnic(groupName, cardElement) {
       currentEthnic = groupName;
@@ -261,7 +270,6 @@ const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
     function renderEthnicCards() {
       const container = document.getElementById('ethnicContainer');
       
-      // กรองตามชาติพันธุ์ และ หมวดหมู่
       let filteredData = allEthnicData.filter(item => item.group_name === currentEthnic);
       if (currentCategory !== 'ทั้งหมด') {
         filteredData = filteredData.filter(item => item.category === currentCategory);
