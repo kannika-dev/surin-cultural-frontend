@@ -290,20 +290,37 @@
       }
 
       container.innerHTML = filteredData.map(item => `
-        <div class="col-12 col-md-6 col-lg-4">
-          <div class="card h-100 ethnic-card" onclick="openDetailModal(${item.id})">
-            <img src="${item.image || 'https://via.placeholder.com/400x240?text=No+Image'}" class="card-img-top" alt="${item.title}">
-            <div class="card-body d-flex flex-column p-4">
-              <span class="badge-category align-self-start mb-2">${item.category}</span>
-              <h5 class="card-title fw-bold text-dark mb-2">${item.title}</h5>
-              <p class="card-text text-muted small text-truncate mb-3">${item.description || ''}</p>
-              <button class="btn btn-outline-dark btn-sm rounded-pill mt-auto align-self-start px-3">
-                👁️ ดูรายละเอียด
-              </button>
-            </div>
-          </div>
-        </div>
-      `).join('');
+  <div class="col-12 col-md-6 col-lg-4 mb-4">
+    <div class="card h-100 ethnic-card shadow-sm border-0 rounded-4" onclick="openDetailModal(${item.id})">
+      <!-- ส่วนรูปภาพ (ถ้าไม่มีรูป จะโชว์รูปตั้งต้นสวยๆ แทน) -->
+      <img src="${item.image || item.image_url || 'https://via.placeholder.com/400x240?text=' + encodeURIComponent(item.category)}" 
+           class="card-img-top rounded-top-4" 
+           alt="${item.category}"
+           style="height: 180px; object-fit: cover;">
+      
+      <div class="card-body d-flex flex-column p-4">
+        <!-- เอาชื่อกลุ่มมาไว้ข้างบนเล็กๆ -->
+        <span class="badge bg-secondary align-self-start mb-2 px-3 py-2 rounded-pill">
+          ${item.group_name}
+        </span>
+        
+        <!-- หัวข้อตัวหนาใหญ่: ให้โชว์เป็น "หมวดหมู่" (เช่น การแต่งกาย / อาหาร) -->
+        <h4 class="card-title fw-bold text-dark mb-2">
+          ${item.category}
+        </h4>
+        
+        <!-- คำอธิบายย่อย -->
+        <p class="card-text text-muted small mb-3 flex-grow-1">
+          ${item.description || 'กดเพื่อดูรายละเอียดเพิ่มเติมเกี่ยวกับ' + item.category}
+        </p>
+        
+        <button class="btn btn-outline-primary btn-sm rounded-pill mt-auto align-self-start px-3">
+          👁️ ดูรายละเอียด${item.category}
+        </button>
+      </div>
+    </div>
+  </div>
+`).join('');
     }
     function openDetailModal(id) {
       const item = allEthnicData.find(d => d.id === id);
