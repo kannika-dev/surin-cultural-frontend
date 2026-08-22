@@ -270,9 +270,15 @@
     function renderEthnicCards() {
       const container = document.getElementById('ethnicContainer');
       
-      let filteredData = allEthnicData.filter(item => item.group_name === currentEthnic);
+      // ใช้ .trim() ตัดช่องว่าง เพื่อป้องกันปัญหาข้อมูลไม่ตรงกัน
+      let filteredData = allEthnicData.filter(item => 
+        item.group_name && item.group_name.trim() === currentEthnic.trim()
+      );
+      
       if (currentCategory !== 'ทั้งหมด') {
-        filteredData = filteredData.filter(item => item.category === currentCategory);
+        filteredData = filteredData.filter(item => 
+          item.category && item.category.trim() === currentCategory.trim()
+        );
       }
 
       if (filteredData.length === 0) {
